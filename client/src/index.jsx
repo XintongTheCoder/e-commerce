@@ -1,12 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import App from './components/App.jsx';
-import store from './store';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { Provider } from "react-redux";
+import App from "./components/App.jsx";
+import store from "./store";
 
-const root = ReactDOM.createRoot(document.querySelector('#app'));
+const client = new ApolloClient({
+  uri: "/graphql/",
+  cache: new InMemoryCache(),
+});
+
+const root = ReactDOM.createRoot(document.querySelector("#app"));
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ApolloProvider>
 );
